@@ -1,0 +1,184 @@
+import { Menu, X, Home, User, Mail } from 'lucide-react';
+import { useState } from 'react';
+
+function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const data = [
+    { 
+      title: 'คำบูชาพระ', 
+      description: 'อิมินา สักกาเรนะ ตัง พุทธัง อะภิปูชะยามิ <br> อิมินา สักกาเรนะ ตัง ธัมมัง อะภิปูชะยามิ <br> อิมินา สักกาเรนะ ตัง สังฆัง อะภิปูชะยามิ' 
+    },
+    { 
+      title: 'คำนมัสการพระรัตนตรัย', 
+      description: 'อะระหัง สัมมา สัมพุทโธ ภะคะวา พุทธังภะคะวันตัง อภิวาเทมิ(กราบ) <br> สะวาขาโต ภะคะวะตาธัมโม ธัมมังนะมัสสามิ(กราบ) <br> สุปะฏิปันโน ภะคะวะโต สาวะกะสังโฆ สังฆัง นะมามิ(กราบ)' 
+    },
+    { 
+      title: 'คำอาราธนาศีล 5', 
+      description: 'มะยัง ภันเต วิสุง วิสุง รักขะนัตถายะ <br> ติสะระเณนะสะหะ ปัญจะ สีลานิยาจามะ <br> ทุติยัมปิ มะยังภันเต วิสุง วิสุง รักขะนัตถายะ <br> ติสะระเณนะสะหะ ปัญจะ สีลานิยาจามะ <br> ตะติยัมปิ มะยังภันเต วิสุง วิสุง รักขะนัตถายะ <br> ติสะระเณนะสะหะ ปัญจะ สีลานิยาจามะ' 
+    },
+    { 
+      title: 'คำนมัสการพระพุทธเจ้า', 
+      description: 'นะโม ตัสสะ ภะคะวะโต อะระหะโต สัมมาสัมพุทธัสสะ (3 จบ)' 
+    },
+    { 
+      title: 'ไตรสรณคมณ์', 
+      description: 'พุทธัง สะระณัง คัจฉามิ <br> ธัมมัง สะระณัง คัจฉามิ <br> สังฆัง สะระณัง คัจฉามิ <br> ทุติยัมปิ พุทธัง สะระณัง คัจฉามิ <br> ทุติยัมปิ ธัมมัง สะระณัง คัจฉามิ <br> ทุติยัมปิ สังฆัง สะระณัง คัจฉามิ <br> ตะติยัมปิ พุทธัง สะระณัง คัจฉามิ <br> ตะติยัมปิ ธัมมัง สะระณัง คัจฉามิ <br> ตะติยัมปิ สังฆัง สะระณัง คัจฉามิ' 
+    },
+    { 
+      title: 'ศีล 5', 
+      description: 'ปาณาติปาตา เวระมะณี สิกขาปะทัง สะมาทิยามิ <br> อะทินนาทานา เวระมะณี สิกขาปะทัง สะมาทิยามิ <br> กาเมสุมิจฉาจารา เวระมะณี สิกขาปะทัง สะมาทิยามิ <br> มุสาวาทา เวระมะณี สิกขาปะทัง สะมาทิยามิ <br> สุราเมระยะมัชชะปะมาทัฏฐานา เวระมะณี สิกขาปะทัง สะมาทิยามิ' 
+    }
+  ]
+
+  const dataExtend = [
+    { 
+      title: 'คำขอขมาพระรัตนตรัย', 
+      description: 'สัพพัง อะปะราธัง ขะมะถะ เม ภันเต อุกาสะ ทวารัตเยนะ กะตัง <br> สัพพัง อะปะราธัง ขะมะถะ เม ภันเต อุกาสะ ขะมามิ ภันเตฯ <br><br> หากข้าพระพุทธเจ้า ได้เคยประมาทพลาดพลั้งล่วงเกิน ต่อพระรัตนตรัย <br> อันมีพระพุทธเจ้าทุกๆพระองค์ พระปัจเจกพุทธเจ้าทุกๆพระองค์ พระธรรม <br> และพระอริยสงฆ์ทั้งหลาย ในชาติก่อนก็ดี ชาตินี้ก็ดี ด้วยกายก็ดี ด้วยวาจาก็ดี <br> ด้วยใจก็ดี ด้วยเจตนาก็ดี ด้วยความรู้เท่าไม่ถึงการณ์ก็ดี <br> ขอองค์สมเด็จพระสัมมาสัมพุทธเจ้าทุกๆพระองค์ พระธรรม พระอริยสงฆ์ <br> ทั้งหลาย และผู้มีพระคุณทุกท่าน ได้โปรดงดเว้นโทษให้แก่ข้าพระพุทธเจ้า <br> ตั้งแต่บัดนี้เป็นต้นไป ตราบเท่าเข้าสู่พระนิพพานด้วยเทอญ' 
+    },
+    { 
+      title: 'คำแผ่เมตตาให้แก่ตนเอง', 
+      description: 'อะหัง สุขิโต โหมิ <br> ขอให้ข้าพเจ้าจงมีความสุข <br> อะหัง นิททุกโข โหมิ <br> ขอให้ข้าพเจ้าจงปราศจากทุกข์ <br> อะหัง อเวโร โหมิ <br> ขอให้ข้าพเจ้าจงปราศจากเวร <br> อะหัง อัพยาปัชโฌ โหมิ <br> ขอให้ข้าพเจ้าจงปราศจากความลำบาก <br> อะหัง อะนีโฆ โหมิ <br> ขอให้ข้าพเจ้าจงปราศจากอุปสรรค <br> สุขี อัตตานัง ปะริหะรามิ <br> จงรักษาตนให้มีความสุขตลอดกาลนานเทอญ' 
+    },
+    { 
+      title: 'คำแผ่เมตตาให้แก่ผู้อื่น', 
+      description: 'สัพเพ สัตตา สัตว์ทั้งหลายทั้งปวง ที่เป็นเพื่อนทุกข์ <br> เกิด แก่ เจ็บ ตาย ด้วยกันทั้งหมดทั้งสิ้น <br> อะเวรา โหนตุ จงเป็นสุข เป็นสุขเถิด อย่าได้มีเวรแก่กันและกันเลย <br> อัพยาปัชฌา โหนตุ จงเป็นสุข เป็นสุขเถิด อย่าได้เบียดเบียน <br> ซึ่งกันและกันเลย <br> อะนีฆา โหนตุ จงเป็นสุข เป็นสุขเถิดอย่าได้มีความ <br> ทุกข์กายทุกข์ใจเลย <br> สุขี อัตตานัง ปะริหะรันตุ จงมีความสุขกายสุขใจ <br> รักษาตนให้พ้นจากทุกข์ภัยสิ้นเถิด'
+    },
+    {
+      title: 'บทกรวดน้ำ หลวงพ่อฤาษีลิงดำ',
+      description: 'อิทัง ปุญญะ พะลัง <br> ผลบุญใดที่ข้าพเจ้าได้บำเพ็ญ มาล้ว ณโอกาสนี้ ข้าพเจ้าขออุทิศส่วนกุศลนี้ ให้แก่เจ้ากรรมนายเวรทั้งหลาย ที่เคยล่วงเกินมาแล้ว ตั้งแต่ชาติก่อนก็ดี ชาตินี้ก็ดี ขอให้เจ้ากรรมนายเวรทั้งหลาย จงอนุโมทนาส่วนกุศลนี้ และขอจงอโหสิกรรมให้แก่ข้าพเจ้าตั้งแต่วันนี้ตราบเท่าเข้าสู่พระนิพพาน <br><br> และข้าพเจ้าขออุทิศส่วนกุศลนี้ ให้แก่เทพเจ้าทั้งหลาย ที่ปกปักรักษาตัวข้าพเจ้า และเทพเจ้าทั้งหลายทั่วสากลพิภพ และพญายมราช ขอให้เทพเจ้าทั้งหลาย และพญายมราช จงอนุโมทนาส่วนกุศลนี้ และขอจงเป็นสักขีพยาน ในการบำเพ็ญกุศลของข้าพเจ้าในครั้งนี้ด้วยเถิด <br><br> และข้าพเจ้าขออุทิศส่วนกุศลนี้ ให้แก่ท่านทั้งหลาย ที่ล่วงลับไปแล้ว ที่เสวยความสุขอยู่ก็ดี เสวยความทุกข์อยู่ก็ดี เป็นญาติก็ดี มิใช่ญาติก็ดี ขอให้ท่านทั้งหลายจงอนุโมทนาส่วนกุศลนี้ พึงได้รับประโยชน์ และความสุข เช่นเดียวกับข้าพเจ้า จะพึงได้รับ ณกาลบัดเดี๋ยวนี้เถิด <br> ผลและบุญใดที่ข้าพเจ้าได้บำเพ็ญแล้ว ณโอกาสนี้ ขอผลบุญนี้จงเป็นปัจจัยให้ข้าพเจ้าได้เข้าถึง ซึ่งพระนิพพาน ในชาติปัจจุบันนี้เทอญ'
+    },
+    {
+      title: 'คำแผ่ส่วนบุญส่วนกุศล',
+      description: 'อิทัง เม มาตาปิตูนัง โหตุ สุขิตา โหนตุ มาตาปิตะโร <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่บิดามารดาของข้าพเจ้า ขอให้บิดามารดาของข้าพเจ้ามีความสุข <br><br> อิทัง เม ญาตีนัง โหตุ สุขิตา โหนตุ ญาตะโย <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่ญาติทั้งหลายของข้าพเจ้า ขอให้ญาติทั้งหลายของรข้าพเจ้ามีความสุข <br><br> อิทัง เม คุรูปัชฌายาจริยานัง โหตุ สุขิตา โหนตุ คุรูปัชฌายาจริยา <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่ครูอุปัชฌาย์อาจารย์ของข้าพเจ้า ขอให้ครูอุปัชฌาย์อาจารย์ของข้าพเจ้ามีความสุข <br><br> อิทัง สัพพะเทวะตานัง โหตุ สุขิตา โหนตุ สัพเพ เทวา <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่เทวดาทั้งหลายทั้งปวง ขอให้เทวดาทั้งหลายทั้งปวงมีความสุข <br><br> อิทัง สัพพะเปตานัง โหตุ สุขิตา โหนตุ สัพเพ เปตา <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่เปรตทั้งหลายทั้งปวง ขอให้เปรตทั้งหลายทั้งปวงมีความสุข <br><br> อิทัง สัพพะเวรีนัง โหตุ สุขิตา โหนตุ สัพเพ เวรี <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่เจ้ากรรมนายเวรทั้งหลายทั้งปวง ขอให้เจ้ากรรมนายเวรทั้งหลายทั้งปวงมีความสุข <br><br> อิทัง สัพพะสัตตานัง โหตุ สุขิตา โหนตุ สัพเพ สัตตา <br> คำแปล ขอส่วนบุญนี้จงสำเร็จแก่สัตว์ทั้งหลายทั้งปวง ขอให้สัตว์ทั้งหลายทั้งปวงมีความสุขทั่วหน้ากันเทอญ'
+    }
+  ]
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">✨</span>
+              </div>
+              <span className="ml-3 text-xl font-semibold text-gray-900">หนังสือสวดมนต์</span>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8">
+              <a href="#home" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+                <Home className="w-4 h-4 mr-2" />
+                Home
+              </a>
+              <a href="#about" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+                <User className="w-4 h-4 mr-2" />
+                About
+              </a>
+              <a href="#contact" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+                <Mail className="w-4 h-4 mr-2" />
+                Contact
+              </a>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {mobileMenuOpen && (
+            <div className="md:hidden py-4 border-t border-gray-100">
+              <div className="flex flex-col space-y-3">
+                <a href="#home" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors py-2">
+                  <Home className="w-4 h-4 mr-2" />
+                  Home
+                </a>
+                <a href="#about" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors py-2">
+                  <User className="w-4 h-4 mr-2" />
+                  About
+                </a>
+                <a href="#contact" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors py-2">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Contact
+                </a>
+              </div>
+            </div>
+          )}
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section id="home" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28">
+        <div className="text-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">
+              บทสวดมนต์ประจำวัน
+            </span>
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+            รวมบทสวดมนต์ที่สำคัญและสำหรับการปฏิบัติในชีวิตประจำวัน
+          </p>
+        </div>
+      </section>
+
+      {/* Content Grid Section */}
+      <section id="about" className="bg-white py-12 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-12">
+            บทสวด
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 lg:gap-8">
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-xl hover:shadow-lg transition-shadow"
+              >
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: item.description }}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="bg-white py-12 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-12">
+            บทเสริม
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 lg:gap-8">
+            {dataExtend.map((item, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-xl hover:shadow-lg transition-shadow"
+              >
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: item.description }}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-gray-400 text-sm text-center sm:text-left">
+              © EST.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
