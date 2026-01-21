@@ -8,6 +8,19 @@ interface Prayer {
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [fontScale, setFontScale] = useState(1)
+  const FONT_SCALE_STEP = 0.1
+  const FONT_SCALE_MIN = 0.9
+  const FONT_SCALE_MAX = 1.4
+
+  const increaseFont = () =>
+    setFontScale((prev) => Math.min(prev + FONT_SCALE_STEP, FONT_SCALE_MAX))
+  const decreaseFont = () =>
+    setFontScale((prev) => Math.max(prev - FONT_SCALE_STEP, FONT_SCALE_MIN))
+  const resetFont = () => setFontScale(1)
+
+  const canDecrease = fontScale <= FONT_SCALE_MIN
+  const canIncrease = fontScale >= FONT_SCALE_MAX
   const prayers: Prayer[] = [
     {
       title: 'คำบูชาพระ',
@@ -272,9 +285,35 @@ function App() {
               บทสวดมนต์ประจำวัน
             </span>
           </h1>
-          <p className='text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed'>
+          <p className='text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6 leading-relaxed'>
             รวมบทสวดมนต์ที่สำคัญและสำหรับการปฏิบัติในชีวิตประจำวัน
           </p>
+          <fieldset className='flex justify-center gap-3 text-sm border-0 p-0 m-0'>
+            <legend className='sr-only'>ตัวปรับขนาดตัวอักษร</legend>
+            <button
+              type='button'
+              className='px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed'
+              onClick={decreaseFont}
+              disabled={canDecrease}
+            >
+              A-
+            </button>
+            <button
+              type='button'
+              className='px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50'
+              onClick={resetFont}
+            >
+              A
+            </button>
+            <button
+              type='button'
+              className='px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed'
+              onClick={increaseFont}
+              disabled={canIncrease}
+            >
+              A+
+            </button>
+          </fieldset>
         </div>
       </section>
 
@@ -289,7 +328,10 @@ function App() {
                 className='bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-xl hover:shadow-lg transition-shadow'
               >
                 <h3 className='text-xl font-semibold text-gray-900 mb-2'>{item.title}</h3>
-                <p className='text-gray-600 leading-relaxed whitespace-pre-line'>
+                <p
+                  className='text-gray-600 leading-relaxed whitespace-pre-line'
+                  style={{ fontSize: `${fontScale}rem` }}
+                >
                   {item.description}
                 </p>
               </div>
@@ -310,7 +352,10 @@ function App() {
                 className='bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-xl hover:shadow-lg transition-shadow'
               >
                 <h3 className='text-xl font-semibold text-gray-900 mb-2'>{item.title}</h3>
-                <p className='text-gray-600 leading-relaxed whitespace-pre-line'>
+                <p
+                  className='text-gray-600 leading-relaxed whitespace-pre-line'
+                  style={{ fontSize: `${fontScale}rem` }}
+                >
                   {item.description}
                 </p>
               </div>
