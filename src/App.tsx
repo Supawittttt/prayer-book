@@ -1,5 +1,5 @@
-import { Menu, X, Home, User, Mail } from 'lucide-react'
-import { useState } from 'react'
+import { Menu, X, Home, User, Mail, Pause, Play } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
 interface Prayer {
   title: string
@@ -9,9 +9,12 @@ interface Prayer {
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [fontScale, setFontScale] = useState(1)
+  const [isAutoScroll, setIsAutoScroll] = useState(false)
+  const [scrollSpeed, setScrollSpeed] = useState(50)
   const FONT_SCALE_STEP = 0.1
   const FONT_SCALE_MIN = 0.9
   const FONT_SCALE_MAX = 1.4
+  const animationFrameRef = useRef<number | null>(null)
 
   const increaseFont = () =>
     setFontScale((prev) => Math.min(prev + FONT_SCALE_STEP, FONT_SCALE_MAX))
@@ -21,6 +24,9 @@ function App() {
 
   const canDecrease = fontScale <= FONT_SCALE_MIN
   const canIncrease = fontScale >= FONT_SCALE_MAX
+  const scrollButtonClasses = isAutoScroll
+    ? 'bg-red-500 hover:bg-red-600 focus-visible:ring-red-500'
+    : 'bg-blue-600 hover:bg-blue-700 focus-visible:ring-blue-500'
   const prayers: Prayer[] = [
     {
       title: 'คำบูชาพระ',
@@ -197,6 +203,48 @@ function App() {
     }
   ]
 
+  // Drives smooth auto scroll with adjustable speed.
+  useEffect(() => {
+    let lastTimestamp: number | null = null
+
+    const step = (timestamp: number) => {
+      if (!isAutoScroll) {
+        return
+      }
+
+      if (lastTimestamp !== null) {
+        const delta = timestamp - lastTimestamp
+        const distance = (scrollSpeed * delta) / 1000
+        globalThis.scrollBy(0, distance)
+
+        const reachedBottom =
+          globalThis.innerHeight + globalThis.scrollY >= document.documentElement.scrollHeight - 1
+
+        if (reachedBottom) {
+          setIsAutoScroll(false)
+          return
+        }
+      }
+
+      lastTimestamp = timestamp
+      animationFrameRef.current = globalThis.requestAnimationFrame(step)
+    }
+
+    if (isAutoScroll) {
+      animationFrameRef.current = globalThis.requestAnimationFrame(step)
+    } else if (animationFrameRef.current !== null) {
+      globalThis.cancelAnimationFrame(animationFrameRef.current)
+      animationFrameRef.current = null
+    }
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        globalThis.cancelAnimationFrame(animationFrameRef.current)
+        animationFrameRef.current = null
+      }
+    }
+  }, [isAutoScroll, scrollSpeed])
+
   return (
     <div className='min-h-screen bg-gradient-to-br from-slate-50 to-slate-100'>
       {/* Header */}
@@ -314,6 +362,21 @@ function App() {
               A+
             </button>
           </fieldset>
+          <div className='mt-6 flex justify-center'>
+            <label className='flex flex-col text-sm font-medium text-gray-600'>
+              ความเร็วการเลื่อน:{' '}
+              <span className='text-gray-900 font-semibold'>{scrollSpeed.toFixed(0)} px/s</span>
+              <input
+                type='range'
+                min={10}
+                max={200}
+                step={5}
+                value={scrollSpeed}
+                onChange={(event) => setScrollSpeed(Number(event.target.value))}
+                className='mt-2 h-2 w-64 rounded-full bg-gray-200 accent-blue-600'
+              />
+            </label>
+          </div>
         </div>
       </section>
 
@@ -372,6 +435,16 @@ function App() {
           </div>
         </div>
       </footer>
+      <button
+        type='button'
+        aria-pressed={isAutoScroll}
+        aria-label={isAutoScroll ? 'หยุด Auto Scroll' : 'เริ่ม Auto Scroll'}
+        className={`fixed bottom-6 right-4 sm:right-6 z-50 p-4 rounded-full text-white shadow-xl transition-transform duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 ${scrollButtonClasses}`}
+        onClick={() => setIsAutoScroll((prev) => !prev)}
+      >
+        <span className='sr-only'>{isAutoScroll ? 'หยุด Auto Scroll' : 'เริ่ม Auto Scroll'}</span>
+        {isAutoScroll ? <Pause className='w-5 h-5' /> : <Play className='w-5 h-5' />}
+      </button>
     </div>
   )
 }
