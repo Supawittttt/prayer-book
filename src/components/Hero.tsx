@@ -1,5 +1,6 @@
 import { FontScaleControl } from './FontScaleControl'
 import { ScrollSpeedControl } from './ScrollSpeedControl'
+import { SearchBar } from './SearchBar'
 
 interface HeroProps {
   onFontIncrease: () => void
@@ -9,6 +10,8 @@ interface HeroProps {
   canIncrease: boolean
   scrollSpeed: number
   onScrollSpeedChange: (speed: number) => void
+  searchQuery: string
+  onSearchChange: (value: string) => void
 }
 
 export function Hero({
@@ -18,7 +21,9 @@ export function Hero({
   canDecrease,
   canIncrease,
   scrollSpeed,
-  onScrollSpeedChange
+  onScrollSpeedChange,
+  searchQuery,
+  onSearchChange
 }: HeroProps) {
   return (
     <section id='home' className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28'>
@@ -40,8 +45,11 @@ export function Hero({
             canIncrease={canIncrease}
           />
         </div>
-        <div className='flex justify-center'>
+        <div className='flex justify-center mb-6'>
           <ScrollSpeedControl scrollSpeed={scrollSpeed} onChange={onScrollSpeedChange} />
+        </div>
+        <div className='flex justify-center'>
+          <SearchBar value={searchQuery} onChange={onSearchChange} />
         </div>
       </div>
     </section>
